@@ -30,7 +30,7 @@ export default function IssueMap({
 
     import('leaflet').then((L) => {
       const map = L.map(mapRef.current!, {
-        center: [43.252849, 76.916709],
+        center: [41.311158, 69.240562],
         zoom: 13,
         zoomControl: true,
       });

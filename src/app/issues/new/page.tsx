@@ -21,8 +21,8 @@ export default function NewIssuePage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [photo, setPhoto] = useState<string | null>(null);
-  const [lat, setLat] = useState<number>(43.252849);
-  const [lng, setLng] = useState<number>(76.916709);
+  const [lat, setLat] = useState<number>(41.311158);
+  const [lng, setLng] = useState<number>(69.240562);
   const [address, setAddress] = useState('');
   const [dragging, setDragging] = useState(false);
   const [submitted, setSubmitted] = useState(false);

@@ -21,7 +21,7 @@ export default function MapPicker({ lat, lng, onChange }: MapPickerProps) {
 
     import('leaflet').then((L) => {
       const map = L.map(mapRef.current!, {
-        center: [lat || 43.252849, lng || 76.916709],
+        center: [lat || 41.311158, lng || 69.240562],
         zoom: 14,
       });
 
