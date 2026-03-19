@@ -36,9 +36,23 @@ export default function AuthPage() {
     }
   };
 
-  const handleQuickLogin = (userEmail: string) => {
+  const handleQuickLogin = async (userEmail: string) => {
     setEmail(userEmail);
     setPassword('123456');
+    setLoading(true);
+    setError('');
+    await new Promise(r => setTimeout(r, 400));
+    const user = login(userEmail, '123456');
+    setLoading(false);
+    if (user) {
+      setUser(user);
+      if (user.role === 'moderator') router.push('/moderator');
+      else if (user.role === 'worker') router.push('/worker');
+      else if (user.role === 'admin') router.push('/admin');
+      else router.push('/dashboard');
+    } else {
+      setError('Ошибка входа демо-аккаунта');
+    }
   };
 
   const demoAccounts = MOCK_USERS.map(u => ({ email: u.email, role: u.role, name: u.name.split(' ')[0] }));
@@ -142,15 +156,16 @@ export default function AuthPage() {
           {/* Demo accounts */}
           <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
             <p style={{ fontSize: '12px', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
-              🎮 Демо-аккаунты (пароль: 123456)
+              ⚡ Быстрый вход (В 1 клик)
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {demoAccounts.map(acc => (
-                <button key={acc.email} onClick={() => handleQuickLogin(acc.email)} style={{
+                <button key={acc.email} type="button" disabled={loading} onClick={() => handleQuickLogin(acc.email)} style={{
                   display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px',
                   border: '1.5px solid ' + (email === acc.email ? '#bfdbfe' : '#e2e8f0'),
                   borderRadius: '10px', background: email === acc.email ? '#eff6ff' : 'white',
-                  cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left',
+                  cursor: loading ? 'not-allowed' : 'pointer', transition: 'all 0.15s', textAlign: 'left',
+                  opacity: loading && email !== acc.email ? 0.6 : 1
                 }}>
                   <div style={{
                     width: 32, height: 32, borderRadius: '50%',
@@ -164,7 +179,9 @@ export default function AuthPage() {
                     <div style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>{acc.name}</div>
                     <div style={{ fontSize: '11px', color: '#64748b' }}>{ROLE_LABELS[acc.role]}</div>
                   </div>
-                  <div style={{ fontSize: '11px', color: '#94a3b8' }}>{acc.email}</div>
+                  <div style={{ fontSize: '12px', color: '#2563eb', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                    {email === acc.email && loading ? 'Вход...' : 'Войти →'}
+                  </div>
                 </button>
               ))}
             </div>

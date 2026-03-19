@@ -3,7 +3,7 @@
 import { User, Issue, IssueStatus } from './types';
 import { MOCK_USERS, MOCK_ISSUES } from './mockData';
 
-const ISSUES_KEY = 'citytrack_issues_v4';
+const ISSUES_KEY = 'citytrack_issues_v5';
 const CURRENT_USER_KEY = 'citytrack_user';
 
 export function getIssues(): Issue[] {
