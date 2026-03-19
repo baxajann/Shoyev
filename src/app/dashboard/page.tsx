@@ -134,10 +134,14 @@ export default function DashboardPage() {
               const statusOrder = ['new', 'moderation', 'in_progress', 'resolved', 'closed'];
               const currentStep = statusOrder.indexOf(issue.status);
               return (
-                <div key={issue.id} className="animate-fadeInUp" style={{
+                <Link href={`/issues/${issue.id}`} key={issue.id} className="animate-fadeInUp" style={{
                   border: '1.5px solid #f1f5f9', borderRadius: '14px', overflow: 'hidden',
-                  animationDelay: `${idx * 50}ms`,
-                }}>
+                  animationDelay: `${idx * 50}ms`, display: 'block', textDecoration: 'none', color: 'inherit',
+                  transition: 'box-shadow 0.2s', cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)'}
+                onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
+                >
                   <div style={{ display: 'flex', gap: '0' }}>
                     {issue.photoBefore && (
                       <img src={issue.photoBefore} alt="Фото" style={{
@@ -182,7 +186,7 @@ export default function DashboardPage() {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
