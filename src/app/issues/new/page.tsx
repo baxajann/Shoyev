@@ -32,7 +32,7 @@ export default function NewIssuePage() {
 
   const canNext = () => {
     if (step === 0) return !!categoryId;
-    if (step === 1) return title.trim().length > 5 && description.trim().length > 10;
+    if (step === 1) return title.trim().length > 2 && description.trim().length > 5;
     if (step === 3) return lat !== 0 && lng !== 0;
     return true;
   };
@@ -196,8 +196,11 @@ export default function NewIssuePage() {
                 className="input-field" placeholder="Например: Яма на дороге у дома №5"
                 maxLength={80}
               />
-              <div style={{ fontSize: '11px', color: '#94a3b8', textAlign: 'right', marginTop: '4px' }}>
-                {title.length}/80
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
+                <span style={{ fontSize: '11px', color: title.trim().length > 0 && title.trim().length < 3 ? '#ef4444' : '#94a3b8' }}>
+                  {title.trim().length > 0 && title.trim().length < 3 ? 'Минимум 3 символа' : ''}
+                </span>
+                <span style={{ fontSize: '11px', color: '#94a3b8' }}>{title.length}/80</span>
               </div>
             </div>
             <div>
@@ -209,8 +212,11 @@ export default function NewIssuePage() {
                 className="input-field" placeholder="Опишите проблему подробно: размер, опасность, как давно возникла..."
                 style={{ minHeight: '120px', resize: 'vertical' }} maxLength={500}
               />
-              <div style={{ fontSize: '11px', color: '#94a3b8', textAlign: 'right', marginTop: '4px' }}>
-                {description.length}/500
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
+                <span style={{ fontSize: '11px', color: description.trim().length > 0 && description.trim().length < 6 ? '#ef4444' : '#94a3b8' }}>
+                  {description.trim().length > 0 && description.trim().length < 6 ? 'Минимум 6 символов' : ''}
+                </span>
+                <span style={{ fontSize: '11px', color: '#94a3b8' }}>{description.length}/500</span>
               </div>
             </div>
           </div>
@@ -323,7 +329,7 @@ export default function NewIssuePage() {
         ) : <div />}
         {step < 4 ? (
           <button className="btn-primary" onClick={handleNext} disabled={!canNext()}
-            style={{ opacity: canNext() ? 1 : 0.5 }}>
+            style={{ opacity: canNext() ? 1 : 0.5, cursor: canNext() ? 'pointer' : 'not-allowed' }}>
             Далее <ChevronRight size={16} />
           </button>
         ) : (
